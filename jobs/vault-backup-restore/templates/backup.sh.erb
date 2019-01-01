@@ -1,0 +1,32 @@
+#!/bin/bash
+
+set -x
+set -e
+
+# The BBR CLI is responsible for setting the BBR_ARTIFACT_DIRECTORY
+
+export VAULT_ADDR=<%= p('bbr.vault_addr') %>
+export VAULT_TOKEN=<%= p('bbr.vault_token') %>
+export VAULT_SKIP_VERIFY=<%= p('bbr.vault_tls_skip_verify') %>
+export ENCRYPTION_PASSPHRASE=<%= p('bbr.encryption_passphrase') %>
+export DEBUG=true
+
+function backup_vault() {
+  echo "Exporting vault secrets"
+
+  pushd $BBR_ARTIFACT_DIRECTORY > /dev/null
+
+  echo "Exporting vault's secret path"
+  /var/vcap/packages/safe/bin/safe -k export secret > secrets
+
+  echo "Encrypting secrets into secrets.gpg"
+  gpg --yes --passphrase=$ENCRYPTION_PASSPHRASE --no-use-agent -c secrets
+
+  rm -f secrets
+
+  echo "Compressing backup files"
+
+  popd > /dev/null
+}
+
+backup_vault

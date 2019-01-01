@@ -1,0 +1,20 @@
+---
+name: vault-backup-restore
+
+templates:
+  backup.sh.erb: bin/bbr/backup
+  restore.sh.erb: bin/bbr/restore
+
+packages:
+- safe
+
+properties:
+  bbr.vault_addr:
+    description: Vault address use for backups
+  bbr.vault_token:
+    description: Vault token use for backups
+  bbr.vault_tls_skip_verify:
+    default: false
+    description: Skips tls verify when performing backups
+  bbr.encryption_passphrase:
+    description: pasasphrase to encrypt file
