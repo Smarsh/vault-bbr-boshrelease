@@ -18,3 +18,6 @@ properties:
     description: Skips tls verify when performing backups
   bbr.encryption_passphrase:
     description: pasasphrase to encrypt file
+  bbr.debug:
+    default: false 
+    description: Enables debug output for backups 

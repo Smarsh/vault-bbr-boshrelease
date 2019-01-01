@@ -1,19 +1,23 @@
 #!/bin/bash
 
-set -x
 set -e
-
-# The BBR CLI is responsible for setting the BBR_ARTIFACT_DIRECTORY
 
 export VAULT_ADDR=<%= p('bbr.vault_addr') %>
 export VAULT_TOKEN=<%= p('bbr.vault_token') %>
 export VAULT_SKIP_VERIFY=<%= p('bbr.vault_tls_skip_verify') %>
 export ENCRYPTION_PASSPHRASE=<%= p('bbr.encryption_passphrase') %>
-export DEBUG=true
+export DEBUG=<%= p('bbr.debug') %>
+
+if [[ "${DEBUG,,}" == "true" ]]; then
+  set -x
+  echo "Environment variables"
+  env
+fi
 
 function backup_vault() {
   echo "Exporting vault secrets"
 
+  # The BBR CLI is responsible for setting the BBR_ARTIFACT_DIRECTORY
   pushd $BBR_ARTIFACT_DIRECTORY > /dev/null
 
   echo "Exporting vault's secret path"
