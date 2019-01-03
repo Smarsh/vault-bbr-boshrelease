@@ -2,9 +2,10 @@
 
 set -e
 
-export VAULT_ADDR=<%= p('bbr.vault_addr') %>
+JOB_DIR=/var/vcap/jobs/vault
+source $JOB_DIR/data/properties.sh
+
 export VAULT_TOKEN=<%= p('bbr.vault_token') %>
-export VAULT_SKIP_VERIFY=<%= p('bbr.vault_tls_skip_verify') %>
 export ENCRYPTION_PASSPHRASE=<%= p('bbr.encryption_passphrase') %>
 export DEBUG=<%= p('bbr.debug') %>
 
