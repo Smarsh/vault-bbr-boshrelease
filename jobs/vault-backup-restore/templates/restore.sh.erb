@@ -1,0 +1,37 @@
+
+
+#!/bin/bash
+
+set -e
+
+JOB_DIR=/var/vcap/jobs/vault
+source $JOB_DIR/data/properties.sh
+
+export VAULT_TOKEN=<%= p('bbr.vault_token') %>
+export ENCRYPTION_PASSPHRASE=<%= p('bbr.encryption_passphrase') %>
+export DEBUG=<%= p('bbr.debug') %>
+
+if [[ "${DEBUG,,}" == "true" ]]; then
+  set -x
+  echo "Environment variables"
+  env
+fi
+
+function restore_vault() {
+  echo "Exporting vault secrets"
+
+  # The BBR CLI is responsible for setting the BBR_ARTIFACT_DIRECTORY
+  pushd $BBR_ARTIFACT_DIRECTORY > /dev/null
+
+  echo "Encrypting secrets into secrets.gpg"
+  gpg --yes --passphrase=$ENCRYPTION_PASSPHRASE --no-use-agent -d secrets.gpg > secrets
+
+  echo "Exporting vault's secret path"
+  /var/vcap/packages/safe/bin/safe import secrets
+
+  rm -f secrets
+
+  popd > /dev/null
+}
+
+restore_vault
