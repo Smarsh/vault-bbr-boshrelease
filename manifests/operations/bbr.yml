@@ -13,6 +13,5 @@
     release: vault-bbr
     properties:
       bbr:
-        vault_addr: ((bbr_vault_addr))
         vault_token: ((bbr_vault_token))
         encryption_passphrase: ((bbr_encryption_passphrase))
