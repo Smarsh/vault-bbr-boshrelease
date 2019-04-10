@@ -1,5 +1,3 @@
-
-
 #!/bin/bash
 
 set -e
@@ -23,11 +21,13 @@ function restore_vault() {
   # The BBR CLI is responsible for setting the BBR_ARTIFACT_DIRECTORY
   pushd $BBR_ARTIFACT_DIRECTORY > /dev/null
 
-  echo "Encrypting secrets into secrets.gpg"
+  echo "Decrypting secrets.gpg into secrets"
   gpg --yes --passphrase=$ENCRYPTION_PASSPHRASE --no-use-agent -d secrets.gpg > secrets
 
-  echo "Exporting vault's secret path"
-  /var/vcap/packages/safe/bin/safe import secrets
+  echo "Importing vault's secret path"
+  /var/vcap/packages/safe/bin/safe target -k $VAULT_ADDR local
+  echo $VAULT_TOKEN | /var/vcap/packages/safe/bin/safe auth token
+  /var/vcap/packages/safe/bin/safe import < secrets
 
   rm -f secrets
 
