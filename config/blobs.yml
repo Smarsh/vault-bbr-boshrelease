@@ -1,4 +1,3 @@
 safe/safe-linux-amd64:
   size: 8065048
-  object_id: 143e7e2e-f711-4142-4ec5-b676be511f51
-  sha: 4b8f8855ac21025d08bd30c23c8b0d0b9c72f88b
+  sha: sha256:455012486ac2208637de65735ac20e8e9f60aeaeedf195dcc0c41714ef7ae9c7

@@ -2,4 +2,4 @@ name: vault-bbr
 blobstore:
   provider: s3
   options:
-    bucket_name: vault-bbr-boshrelease
+    bucket_name: smarsh-bosh-release-blobs
