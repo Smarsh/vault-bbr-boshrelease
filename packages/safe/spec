@@ -1,6 +1,0 @@
----
-name: safe
-dependencies: []
-files:
-# from https://github.com/starkandwayne/safe/releases
-- safe/safe-linux-amd64

@@ -5,9 +5,6 @@ templates:
   backup.sh.erb: bin/bbr/backup
   restore.sh.erb: bin/bbr/restore
 
-packages:
-- safe
-
 properties:
   bbr.vault_token:
     description: Vault token use for backups
