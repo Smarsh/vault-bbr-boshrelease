@@ -5,7 +5,6 @@ set -e
 JOB_DIR=/var/vcap/jobs/vault
 source $JOB_DIR/data/properties.sh
 
-export VAULT_TOKEN=<%= p('bbr.vault_token') %>
 export ENCRYPTION_PASSPHRASE=<%= p('bbr.encryption_passphrase') %>
 export DEBUG=<%= p('bbr.debug') %>
 

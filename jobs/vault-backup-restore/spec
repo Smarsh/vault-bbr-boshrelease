@@ -15,4 +15,6 @@ properties:
     description: pasasphrase to encrypt file
   bbr.debug:
     default: false 
-    description: Enables debug output for backups 
+    description: Enables debug output for backups
+  bbr.vault_address:
+    description: Vault Address used for restores
