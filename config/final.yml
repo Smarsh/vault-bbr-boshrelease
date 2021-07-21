@@ -1,3 +1,4 @@
+---
 name: vault-bbr
 blobstore:
   provider: local

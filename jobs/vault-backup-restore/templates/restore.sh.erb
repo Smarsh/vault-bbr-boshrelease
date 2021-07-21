@@ -24,6 +24,7 @@ function restore_vault() {
   gpg --yes --passphrase=$ENCRYPTION_PASSPHRASE --no-use-agent -d secrets.gpg > secrets
 
   echo "Importing vault's secret path"
+  chmod a+x /var/vcap/packages/safe/bin/safe
   /var/vcap/packages/safe/bin/safe target -k $VAULT_ADDR local
   echo $VAULT_TOKEN | /var/vcap/packages/safe/bin/safe auth token
   /var/vcap/packages/safe/bin/safe import < secrets

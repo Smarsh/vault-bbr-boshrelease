@@ -2,8 +2,8 @@
 
 set -e
 
-export VAULT_TOKEN=<%= p('bbr.vault_token') %>
-export VAULT_ADDR=<%= p('bbr.vault_address') %>
+export VAULT_ADDR="<%= p("bbr.vault_address") %>"
+export VAULT_TOKEN="<%= p("bbr.vault_token","") %>"
 export VAULT_SKIP_VERIFY=1
 export ENCRYPTION_PASSPHRASE=<%= p('bbr.encryption_passphrase') %>
 export DEBUG=<%= p('bbr.debug') %>
@@ -21,6 +21,7 @@ function backup_vault() {
   pushd $BBR_ARTIFACT_DIRECTORY > /dev/null
 
   echo "Exporting vault's secret path"
+  chmod a+x /var/vcap/packages/safe/bin/safe
   /var/vcap/packages/safe/bin/safe -k export secret > secrets
 
   echo "Encrypting secrets into secrets.gpg"
