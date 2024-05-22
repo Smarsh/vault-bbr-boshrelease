@@ -25,7 +25,12 @@ function backup_vault() {
   /var/vcap/packages/safe/bin/safe -k export secret > secrets
 
   echo "Encrypting secrets into secrets.gpg"
-  gpg --yes --passphrase=$ENCRYPTION_PASSPHRASE --no-use-agent -c secrets
+  source /etc/lsb-release
+  if [ "$DISTRIB_CODENAME" == "jammy" ]; then 
+    gpg --yes --batch --passphrase=$ENCRYPTION_PASSPHRASE --no-use-agent -c secrets
+  else 
+    gpg --yes --passphrase=$ENCRYPTION_PASSPHRASE --no-use-agent -c secrets
+  fi
 
   rm -f secrets
 
