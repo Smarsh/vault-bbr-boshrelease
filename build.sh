@@ -8,8 +8,6 @@ if [ $# -lt 1 ]; then
 fi
 version=$1
 
-#CGO_ENABLED=0 go build -o src/safe .
-
 cat > config/final.yml << EOF
 name: vault-bbr
 blobstore:
@@ -19,7 +17,7 @@ blobstore:
 EOF
 
 mkdir -p build
-bosh create-release --final --version=$version --tarball=build/vault-bbr-$version.tgz
+bosh create-release --final --force --version=$version --tarball=build/vault-bbr-$version.tgz
 
 # remove all these pointless directories, we are creating a tarball
 rm -rf config/final.yml .dev_builds .final_builds dev_releases releases blobs
