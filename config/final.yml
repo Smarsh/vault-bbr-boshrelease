@@ -1,6 +1,0 @@
----
-name: vault-bbr
-blobstore:
-  provider: local
-  options:
-    blobstore_path: /tmp
