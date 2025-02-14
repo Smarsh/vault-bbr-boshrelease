@@ -6,6 +6,8 @@ export VAULT_ADDR="<%= p("bbr.vault_address") %>"
 export VAULT_TOKEN="<%= p("bbr.vault_token","") %>"
 export VAULT_SKIP_VERIFY=1
 export ENCRYPTION_PASSPHRASE=<%= p('bbr.encryption_passphrase') %>
+mkdir -p /var/vcap/store/vault-backup/
+BBR_ARTIFACT_DIRECTORY=/var/vcap/store/vault-backup/
 source /etc/lsb-release
 export DEBUG=<%= p('bbr.debug') %>
 
@@ -26,7 +28,6 @@ function backup_vault() {
   /var/vcap/packages/safe/bin/safe -k export secret > secrets
 
   echo "Encrypting secrets into secrets.gpg"
-  source /etc/lsb-release
   if [ "$DISTRIB_CODENAME" == "jammy" ]; then 
     gpg --yes --batch --passphrase=$ENCRYPTION_PASSPHRASE -c secrets
   else 
