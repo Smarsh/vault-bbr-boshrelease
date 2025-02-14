@@ -6,6 +6,7 @@ export VAULT_TOKEN=<%= p('bbr.vault_token') %>
 export VAULT_ADDR=<%= p('bbr.vault_address') %>
 export VAULT_SKIP_VERIFY=1
 export ENCRYPTION_PASSPHRASE=<%= p('bbr.encryption_passphrase') %>
+source /etc/lsb-release
 export DEBUG=<%= p('bbr.debug') %>
 
 if [[ "${DEBUG,,}" == "true" ]]; then
@@ -21,7 +22,11 @@ function restore_vault() {
   pushd $BBR_ARTIFACT_DIRECTORY > /dev/null
 
   echo "Decrypting secrets.gpg into secrets"
-  gpg --yes --passphrase=$ENCRYPTION_PASSPHRASE --no-use-agent -d secrets.gpg > secrets
+  if [ "$DISTRIB_CODENAME" == "jammy" ]; then 
+    gpg --yes --batch --passphrase=$ENCRYPTION_PASSPHRASE -d secrets.gpg > secrets
+  else 
+    gpg --yes --passphrase=$ENCRYPTION_PASSPHRASE --no-use-agent -d secrets.gpg > secrets
+  fi
 
   echo "Importing vault's secret path"
   chmod a+x /var/vcap/packages/safe/bin/safe
