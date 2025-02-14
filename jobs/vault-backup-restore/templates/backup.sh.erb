@@ -6,7 +6,7 @@ export VAULT_ADDR="<%= p("bbr.vault_address") %>"
 export VAULT_TOKEN="<%= p("bbr.vault_token","") %>"
 export VAULT_SKIP_VERIFY=1
 export ENCRYPTION_PASSPHRASE=<%= p('bbr.encryption_passphrase') %>
-BBR_ARTIFACT_DIRECTORY=vault
+BBR_ARTIFACT_DIRECTORY=/var/vcap/store/vault-backup/
 source /etc/lsb-release
 export DEBUG=<%= p('bbr.debug') %>
 
