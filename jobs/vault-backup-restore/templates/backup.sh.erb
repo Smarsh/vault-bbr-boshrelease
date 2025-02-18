@@ -7,7 +7,6 @@ export VAULT_TOKEN="<%= p("bbr.vault_token","") %>"
 export VAULT_SKIP_VERIFY=1
 export ENCRYPTION_PASSPHRASE=<%= p('bbr.encryption_passphrase') %>
 mkdir -p /var/vcap/store/vault-backup/
-BBR_ARTIFACT_DIRECTORY=/var/vcap/store/vault-backup/
 source /etc/lsb-release
 export DEBUG=<%= p('bbr.debug') %>
 
